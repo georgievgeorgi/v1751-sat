@@ -13,17 +13,17 @@
 
 
 
-int gDebug;
-unsigned int gNBursts;
-std::string gOutputRootFile;
+int ndegra::gDebug;
+unsigned int ndegra::gNBursts;
+std::string ndegra::gOutputRootFile;
 
 int main(int argc, char* argv[]) {
   int opt;
   std::vector<std::string> inputFiles,inputLists;
   std::string tmpstring;
 
-  gDebug=1; // default value
-  gNBursts=-1;
+  ndegra::gDebug=1; // default value
+  ndegra::gNBursts=-1;
 
 
   const struct option longopts[] =
@@ -40,9 +40,9 @@ int main(int argc, char* argv[]) {
     switch (opt){
       case 'i': tmpstring=optarg;inputFiles.push_back(tmpstring);break;
       case 'l': tmpstring=optarg;inputLists.push_back(tmpstring);break;
-      case 'o': gOutputRootFile=optarg;break;
-      case 'd': gDebug=atoi(optarg); break;
-      case 'b': gNBursts=atoi(optarg);break;
+      case 'o': ndegra::gOutputRootFile=optarg;break;
+      case 'd': ndegra::gDebug=atoi(optarg); break;
+      case 'b': ndegra::gNBursts=atoi(optarg);break;
       default:
                 fprintf(
                     stderr,
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
   }
 
   if(
-      gOutputRootFile.size()==0||
+      ndegra::gOutputRootFile.size()==0||
       (inputLists.size()==0&&inputFiles.size()==0))
   {
     fprintf(stderr,"SYNOPSIS: %s [-i input file] [-l list file] [-o root_file]\n",argv[0]);
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 
   char tmpchar[500];
 
-  Histos::GetInstance().SetFileName(gOutputRootFile);
+  Histos::GetInstance().SetFileName(ndegra::gOutputRootFile);
 
   for(unsigned int i=0;i<inputLists.size();++i){
     std::ifstream list(inputLists[i].c_str(),std::ifstream::in);
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
       ++if_it){
     std::string& filename=*if_it;
     std::cerr<<"Processing \""<<filename<<"\""<<std::endl;
-    if(burst_i>gNBursts)break;
+    if(burst_i>ndegra::gNBursts)break;
     burst_i++;
 
 
