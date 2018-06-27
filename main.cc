@@ -102,6 +102,7 @@ int main(int argc, char* argv[]) {
     }
   }
   ana.Finalise();
+  Histos::GetInstance().SaveDelete();
 
 
 

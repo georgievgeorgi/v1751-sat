@@ -95,6 +95,7 @@ class Header{
       fNChannels=0;
       for(int i=0;i<8;i++){
         fHasCh[i]=(fHeader.channelMask>>i&0x1); //checks if i-th bit is set
+        //std::cout<<__FILE__<<":"<<__LINE__<<"  ch "<<i<<"  "<<fHasCh[i]<<std::endl;
         if(fHeader.channelMask>>i&0x1) ++fNChannels; //counts enabled channels
       }
       fEventSize=fHeader.eventSize-4; // the real event size is w/o the header
@@ -205,8 +206,9 @@ class RawFile{
       for(int ch_i=0;ch_i<8;++ch_i){
         if(fEvent.fHeader.HasChannel(ch_i)){
           fEvent.fChans[ch_i].SetNWords(fRawFile.read(fEvent.fChans[ch_i].fSamplesHandler,fEvent.fHeader.GetChannelSize()*4).gcount()/4);
-          if(fEvent.fChans[ch_i].GetNWords()!=fEvent.fHeader.GetChannelSize())
-            std::cout<<fEvent.fChans[ch_i].GetNWords()<<"   "<<fEvent.fHeader.GetChannelSize()<<std::endl;
+          if(fEvent.fChans[ch_i].GetNWords()!=fEvent.fHeader.GetChannelSize()){
+            std::cout<<__FILE__<<":"<<__LINE__<<" ch_i="<<ch_i<<"   "<<"   "<<fEvent.fChans[ch_i].GetNWords()<<"   "<<fEvent.fHeader.GetChannelSize()<<std::endl;
+          }
         }
         if(fRawFile.eof())return false;
       }
